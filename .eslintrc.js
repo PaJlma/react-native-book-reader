@@ -1,4 +1,8 @@
 module.exports = {
   root: true,
-  extends: ["universe/native"],
+  extends: ["plugin:@typescript-eslint/recommended"],
+  rules: {
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-var-requires": "off",
+  },
 };
