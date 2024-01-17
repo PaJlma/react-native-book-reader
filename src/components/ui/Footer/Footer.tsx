@@ -5,9 +5,12 @@ import LibrarySVG from "@/app-assets/svg/library.svg";
 import LibraryFilledSVG from "@/app-assets/svg/library-filled.svg";
 import BookmarksSVG from "@/app-assets/svg/bookmarks.svg";
 import BookmarksFilledSVG from "@/app-assets/svg/bookmarks-filled.svg";
+import BookSVG from "@/app-assets/svg/book.svg";
+import BookFilledSVG from "@/app-assets/svg/book-filled.svg";
 import { colors } from "@/constants/colors";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { AppNavigationProp, AppRouteProp } from "@/types/navigation.types";
+import FooterButton from "./FooterButton/FooterButton";
 
 const styles = StyleSheet.create({
   body: {
@@ -24,34 +27,35 @@ const styles = StyleSheet.create({
     borderTopColor: colors.black,
     borderTopWidth: 1,
   },
-
-  pressable: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: 2,
-    padding: 5,
-  },
-
-  text: {
-    fontSize: 10,
-  },
 });
 
 const Footer: FC<FooterProps> = (props) => {
   const { navigate } = useNavigation<AppNavigationProp>();
-  const { name } = useRoute<AppRouteProp>();
+  const route = useRoute<AppRouteProp>();
 
   return (
     <View style={styles.body}>
-      <Pressable style={styles.pressable} onPress={() => navigate("Library", {})}>
-        {name === "Library" ? <LibraryFilledSVG width={25} height={25} /> : <LibrarySVG width={25} height={25} />}
-        <Text style={styles.text}>Библиотека</Text>
-      </Pressable>
-      <Pressable style={styles.pressable} onPress={() => navigate("Bookmarks", {})}>
-        {name === "Bookmarks" ? <BookmarksFilledSVG width={25} height={25} /> : <BookmarksSVG width={25} height={25} />}
-        <Text style={styles.text}>Закладки</Text>
-      </Pressable>
+      <FooterButton
+        text="Библиотека"
+        onPress={() => navigate("Library", {})}
+        isActive={route.name === "Library"}
+        icon={<LibrarySVG width={25} height={25} />}
+        activeIcon={<LibraryFilledSVG width={25} height={25} />}
+      />
+      <FooterButton
+        text="Закладки"
+        onPress={() => navigate("Bookmarks", {})}
+        isActive={route.name === "Bookmarks"}
+        icon={<BookmarksSVG width={25} height={25} />}
+        activeIcon={<BookmarksFilledSVG width={25} height={25} />}
+      />
+      <FooterButton
+        text="Моя полка"
+        onPress={() => navigate("MyShelf", {})}
+        isActive={route.name === "MyShelf"}
+        icon={<BookSVG width={25} height={25} />}
+        activeIcon={<BookFilledSVG width={25} height={25} />}
+      />
     </View>
   );
 };
