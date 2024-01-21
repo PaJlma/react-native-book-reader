@@ -10,6 +10,7 @@ module.exports = function(api) {
             "@": "./src",
           },
         },
+        "expo-document-picker",
       ],
     ],
   };

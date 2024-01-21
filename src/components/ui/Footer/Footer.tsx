@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { FooterProps } from "./Footer.types";
 import LibrarySVG from "@/app-assets/svg/library.svg";
 import LibraryFilledSVG from "@/app-assets/svg/library-filled.svg";
@@ -14,16 +14,14 @@ import FooterButton from "./FooterButton/FooterButton";
 
 const styles = StyleSheet.create({
   body: {
-    position: "absolute",
-    left: 0,
-    bottom: 0,
-    right: 0,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
     paddingTop: 15,
     paddingBottom: 15,
+    backgroundColor: colors.white,
+    shadowColor: colors.black,
     borderTopColor: colors.black,
     borderTopWidth: 1,
   },

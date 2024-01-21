@@ -1,26 +1,21 @@
-import { FC, useState } from "react";
-import { Button, Text, View } from "react-native";
+import { FC } from "react";
+import { StyleSheet, View } from "react-native";
 import { MyShelfPageProps } from "./MyShelfPage.types";
-import DocumentPicker from "react-native-document-picker";
+import NavButton from "@/components/ui/NavButton/NavButton";
+import TextSVG from "@/app-assets/svg/text-filled.svg";
+
+const styles = StyleSheet.create({
+  body: {
+    flex: 1,
+  },
+});
 
 const MyShelfPage: FC<MyShelfPageProps> = (props) => {
-  const [text, setText] = useState<string>();
-
-  const onButtonPressHandler = async () => {
-    const [response] = await DocumentPicker.pick({
-      type: [DocumentPicker.types.plainText],
-      allowMultiSelection: false,
-    });
-
-    if (response.name) {
-      setText(response.name);
-    }
-  };
-
   return (
-    <View>
-      <Button title="Открыть файл" onPress={onButtonPressHandler} />
-      <Text>{text}</Text>
+    <View style={styles.body}>
+      <NavButton icon={<TextSVG width={25} height={25} />} navigation={{ screen: "TxtList", params: {} }}>
+        Чтение .txt файлов
+      </NavButton>
     </View>
   );
 };
