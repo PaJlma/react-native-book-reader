@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 
 const BookmarksPage: FC<BookmarksPageProps> = (props) => {
   const bookmarkedTxtFiles = useAppSelector((state) => state.txtFiles).filter((file) => file.bookmarked);
-  const [txtVisible, setTxtVisible] = useState<boolean>(false);
+  const [txtVisible, setTxtVisible] = useState<boolean>(true);
 
   const onDropDownClickHandler = () => {
     setTxtVisible(!txtVisible);

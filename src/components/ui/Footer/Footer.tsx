@@ -34,11 +34,11 @@ const Footer: FC<FooterProps> = (props) => {
   return (
     <View style={styles.body}>
       <FooterButton
-        text="Библиотека"
-        onPress={() => navigate("Library", {})}
-        isActive={route.name === "Library"}
-        icon={<LibrarySVG width={25} height={25} />}
-        activeIcon={<LibraryFilledSVG width={25} height={25} />}
+        text="Моя полка"
+        onPress={() => navigate("MyShelf", {})}
+        isActive={route.name === "MyShelf"}
+        icon={<BookSVG width={25} height={25} />}
+        activeIcon={<BookFilledSVG width={25} height={25} />}
       />
       <FooterButton
         text="Закладки"
@@ -46,13 +46,6 @@ const Footer: FC<FooterProps> = (props) => {
         isActive={route.name === "Bookmarks"}
         icon={<BookmarksSVG width={25} height={25} />}
         activeIcon={<BookmarksFilledSVG width={25} height={25} />}
-      />
-      <FooterButton
-        text="Моя полка"
-        onPress={() => navigate("MyShelf", {})}
-        isActive={route.name === "MyShelf"}
-        icon={<BookSVG width={25} height={25} />}
-        activeIcon={<BookFilledSVG width={25} height={25} />}
       />
     </View>
   );
