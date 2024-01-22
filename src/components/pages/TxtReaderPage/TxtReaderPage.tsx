@@ -36,19 +36,12 @@ const styles = StyleSheet.create({
 });
 
 const TxtReaderPage: FC<TxtReaderPageProps> = (props) => {
-  const { uri } = useRoute<AppRouteProp>().params as TxtReaderScreenProps;
   const dispatch = useAppDispatch();
+  const { uri } = useRoute<AppRouteProp>().params as TxtReaderScreenProps;
   const file = useAppSelector((state) => state.txtFiles).find((file) => file.uri === uri);
   const [text, setText] = useState<string>();
   const [scrollViewHeight, setScrollViewHeight] = useState<number>(0);
-  const [scrollViewContentHeight, setScrollViewContentHeight] = useState<number>(0);
   const scrollViewRef = createRef<ScrollView>();
-
-  useEffect(() => {
-    if (scrollViewContentHeight < scrollViewHeight && file) {
-      dispatch(setTxtRead({ uri: file.uri, scrolled: scrollViewContentHeight, percents: 100 }));
-    }
-  }, [scrollViewContentHeight, scrollViewHeight]);
 
   useEffect(() => {
     scrollViewRef.current?.scrollTo({ y: file?.read.scrolled });
@@ -68,15 +61,19 @@ const TxtReaderPage: FC<TxtReaderPageProps> = (props) => {
       return;
     }
 
-    dispatch(
-      setTxtRead({
-        uri: file.uri,
-        scrolled: event.nativeEvent.contentOffset.y,
-        percents: Math.trunc(
-          ((event.nativeEvent.contentOffset.y + scrollViewHeight) / event.nativeEvent.contentSize.height) * 100,
-        ),
-      }),
+    const scrolled = event.nativeEvent.contentOffset.y;
+
+    const percents = Math.trunc(
+      ((event.nativeEvent.contentOffset.y + scrollViewHeight) / event.nativeEvent.contentSize.height) * 100,
     );
+
+    dispatch(setTxtRead({ uri: file.uri, scrolled, percents }));
+  };
+
+  const onContentSizeChangeHandler = async (w: number, h: number) => {
+    if (h < scrollViewHeight && file) {
+      dispatch(setTxtRead({ uri: file.uri, scrolled: h, percents: 100 }));
+    }
   };
 
   return (
@@ -85,7 +82,7 @@ const TxtReaderPage: FC<TxtReaderPageProps> = (props) => {
         style={styles.scroll}
         onScroll={onScrollHandler}
         onLayout={(event) => setScrollViewHeight(event.nativeEvent.layout.height)}
-        onContentSizeChange={(w, h) => setScrollViewContentHeight(h)}
+        onContentSizeChange={onContentSizeChangeHandler}
         ref={scrollViewRef}
       >
         <Text style={styles.text}>{text}</Text>
