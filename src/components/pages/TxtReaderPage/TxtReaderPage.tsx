@@ -70,7 +70,7 @@ const TxtReaderPage: FC<TxtReaderPageProps> = (props) => {
     dispatch(setTxtRead({ uri: file.uri, scrolled, percents }));
   };
 
-  const onContentSizeChangeHandler = async (w: number, h: number) => {
+  const onContentSizeChangeHandler = (w: number, h: number) => {
     if (h < scrollViewHeight && file) {
       dispatch(setTxtRead({ uri: file.uri, scrolled: h, percents: 100 }));
     }
